@@ -40,18 +40,36 @@ const observer = new MutationObserver(function(mutationsList, observer) {
                 if (node.nodeType === Node.ELEMENT_NODE && node.hasAttribute('class') && node.getAttribute('class') === 'mx-5 my-4 space-y-4') {
                     // If a new element with the data-e2e-locator="console-result" attribute was added, do something
                     console.log('New console result element added:', node);
-                    if (node.querySelector('span[data-e2e-locator="console-result"]').innerHTML === "Compile Error" || node.querySelector('span[data-e2e-locator="console-result"]').innerHTML === "Wrong Answer")
-                    {
-                        // Add your own code here to handle the new element
+                    let textCE = document.querySelector('span[data-e2e-locator="console-result"]');
+                    let textWA = document.querySelector('div[data-e2e-locator="console-result"]');
+                    if (textCE) {
                         PlayAudio();
+                    } else {
+                        if (textWA) {
+                            textWA = textWA.innerHTML;
+                            console.log(textWA);
+                            if (textWA === "Accepted")
+                            {
+                                PlayAudio();
+                            } else {
+                                PlayAudio();
+                            }
+                        }
+                        // let text = document.querySelector('div[class="text-xl font-medium text-green-s dark:text-dark-green-s"').innerHTML;
+                        // if (text === "Accepted") {
+                        //     PlayAudio();
+                        // }
                     }
                 } else {
-                    if (node.nodeType === Node.ELEMENT_NODE && node.hasAttribute('class') && node.getAttribute('class') === 'bg-layer-1 dark:bg-dark-layer-1 flex h-full w-full flex-col overflow-auto') {
+                    if (node.nodeType === Node.ELEMENT_NODE && node.hasAttribute('class') && node.getAttribute('class') === 'flex h-full w-full flex-col overflow-hidden rounded') {
                         // If a new element with the data-e2e-locator="console-result" attribute was added, do something
                         console.log('New console result element added:', node);
-                        if (node.querySelector('span[data-e2e-locator="submission-result"]').innerHTML === "Accepted")
-                        {
-                            // Add your own code here to handle the new element
+                        // let submission = document.querySelector('div[class="text-green-s dark:text-dark-green-s flex items-center gap-2 text-[16px] font-medium leading-6"]')
+                        // console.log(submission);
+                        // let text = document.querySelector('span[data-e2e-locator="submission-result"]');
+                        // console.log(text);
+                        let result = document.querySelector('div[class="flex w-full pb-4"]');
+                        if (result) {
                             PlayAudio();
                         }
                     }
@@ -67,11 +85,16 @@ const config = { childList: true, subtree: true };
 // Start observing the target node for changes
 observer.observe(targetNode, config);
 
-function PlayAudio()
+function PlayGoodAudio()
 {
-    var soundEffect = sfxRandomizer();
-    //var myAudio = new Audio(chrome.runtime.getURL(`sfx/${soundEffect}`));
-    
-    var myAudio = new Audio(chrome.runtime.getURL("sfx/soundeffect.mp3"));
+    var myAudio = new Audio(chrome.runtime.getURL(sfxRandomizer()));
     myAudio.play();
 };
+
+function PlayBadAudio()
+{
+    var myAudio = new Audio(chrome.runtime.getURL(sfxRandomizer()));
+    myAudio.play();
+};
+
+// bg-layer-1 dark:bg-dark-layer-1 flex h-full w-full flex-col overflow-auto
