@@ -4,7 +4,9 @@
     "description": "Exceptional Soundboarding: A Chrome extension that detects errors during code compilation on LeetCode",
     "version": "2.0",
     "permissions": [
-      "activeTab"
+      "activeTab",
+      "http://*/",
+      "https://*/" 
     ],
     "content_scripts": 
     [
@@ -12,6 +14,9 @@
         "matches": ["https://leetcode.com/*"],
         "js": ["content-script.js"]
       }
+    ],
+    "web_accessible_resources": [
+      "soundeffect.mp3"
     ]
 }
   
