@@ -1,5 +1,19 @@
 const soundList = [
-    'soundeffect.mp3'
+    'sfx-bad/sfx-auugh.mp3',
+    'sfx-bad/sfx-babooey.mp3',
+    'sfx-bad/sfx-bruh.mp3',
+    'sfx-bad/sfx-fart-with-reverb.mp3',
+    'sfx-bad/sfx-goat-scream.mp3',
+    'sfx-bad/sfx-god-no-please.mp3',
+    'sfx-bad/sfx-mission-failed.mp3',
+    'sfx-bad/sfx-no-no-no.mp3',
+    'sfx-bad/sfx-OHMYGOD.mp3',
+    'sfx-bad/sfx-ok.mp3',
+    'sfx-bad/sfx-roblox-oof.mp3',
+    'sfx-bad/sfx-vine.mp3',
+    'sfx-bad/sfx-wait-what.mp3',
+    'sfx-bad/sfx-we-be-right-back.mp3',
+    'sfx-bad/sfx-windows-error.mp3'
 ];  
 
 function sfxRandomizer(){
@@ -43,16 +57,16 @@ const observer = new MutationObserver(function(mutationsList, observer) {
                     let textCE = document.querySelector('span[data-e2e-locator="console-result"]');
                     let textWA = document.querySelector('div[data-e2e-locator="console-result"]');
                     if (textCE) {
-                        PlayAudio();
+                        PlayBadAudio();
                     } else {
                         if (textWA) {
                             textWA = textWA.innerHTML;
                             console.log(textWA);
                             if (textWA === "Accepted")
                             {
-                                PlayAudio();
+                                PlayGoodAudio();
                             } else {
-                                PlayAudio();
+                                PlayBadAudio();
                             }
                         }
                         // let text = document.querySelector('div[class="text-xl font-medium text-green-s dark:text-dark-green-s"').innerHTML;
@@ -70,7 +84,7 @@ const observer = new MutationObserver(function(mutationsList, observer) {
                         // console.log(text);
                         let result = document.querySelector('div[class="flex w-full pb-4"]');
                         if (result) {
-                            PlayAudio();
+                            PlayGoodAudio();
                         }
                     }
                 }
