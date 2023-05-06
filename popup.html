@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Extension Popup</title>
+    <link rel="stylesheet" href="popup.css">
+    <script src="popup.js"></script>
+  </head>
+  <body>
+    <div class="popup-content">
+      <h1>Welcome to My Extension!</h1>
+      <p>Toggle Sound Effects:</p>
+      <label class="switch">
+        <input type="checkbox" id="soundToggle">
+        <span class="slider round"></span>
+      </label>
+      <p>Slider Value: <span id="sliderValue">50</span></p>
+      <input type="range" min="0" max="100" value="50" class="slider" id="mySlider">
+    </div>
+
+    <script>
+      // Retrieve the initial slider value from the background script
+      chrome.runtime.sendMessage({ getSliderValue: true }, function (response) {
+        // Update the slider value and its display
+        const slider = document.getElementById('mySlider');
+        const sliderValue = document.getElementById('sliderValue');
+        slider.value = response.sliderValue;
+        sliderValue.textContent = response.sliderValue;
+      });
+    </script>
+  </body>
+</html>

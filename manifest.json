@@ -36,5 +36,10 @@
       "matches": ["https://leetcode.com/*"],
       "js": ["content-script.js"]
     }
-  ]
+  ],
+  "icons": {"128" : "pepega.png" },
+  "browser_action": {
+    "deafult_icon": "pepega.png",
+    "default_popup": "popup.html"
+  }
 }
