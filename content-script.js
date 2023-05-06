@@ -1,5 +1,34 @@
+const soundList = [
+    'soundeffect.mp3'
+];  
+
+function sfxRandomizer(){
+    const randomIndex = Math.floor(Math.random() * soundList.length);
+    return soundList[randomIndex];
+}
+
+
+
+// // Listen for changes to the page
+// window.addEventListener("click", () => {
+//     // Get the element by its data-e2e-locator attribute
+//     let consoleSpanResultElement = document.querySelector('span[data-e2e-locator="console-result"]');
+//     let consoleDivResultElement = document.querySelector('div[data-e2e-locator="console-result"]');
+
+//     // Check if the element exists and is visible on the page
+//     if (consoleSpanResultElement || consoleDivResultElement) {
+//     // The element is loaded and visible on the page
+//     console.log('The console result element is loaded');
+//     } else {
+//     // The element is not loaded or not visible on the page
+//     console.log('The console result element is not loaded');
+//     }
+//   });
+
 // Select the target node that you want to observe for changes
 const targetNode = document.documentElement;
+
+
 
 // Create a new instance of the MutationObserver object
 const observer = new MutationObserver(function(mutationsList, observer) {
@@ -10,11 +39,22 @@ const observer = new MutationObserver(function(mutationsList, observer) {
             mutation.addedNodes.forEach(node => {
                 if (node.nodeType === Node.ELEMENT_NODE && node.hasAttribute('class') && node.getAttribute('class') === 'mx-5 my-4 space-y-4') {
                     // If a new element with the data-e2e-locator="console-result" attribute was added, do something
-                    //m4a to console.log('New console result element added:', node);
-                    console.log("op");
-                    // Add your own code here to handle the new element
-                    PlayAudio();
-                    console.log("sound played");
+                    console.log('New console result element added:', node);
+                    if (node.querySelector('span[data-e2e-locator="console-result"]').innerHTML === "Compile Error" || node.querySelector('span[data-e2e-locator="console-result"]').innerHTML === "Wrong Answer")
+                    {
+                        // Add your own code here to handle the new element
+                        PlayAudio();
+                    }
+                } else {
+                    if (node.nodeType === Node.ELEMENT_NODE && node.hasAttribute('class') && node.getAttribute('class') === 'bg-layer-1 dark:bg-dark-layer-1 flex h-full w-full flex-col overflow-auto') {
+                        // If a new element with the data-e2e-locator="console-result" attribute was added, do something
+                        console.log('New console result element added:', node);
+                        if (node.querySelector('span[data-e2e-locator="submission-result"]').innerHTML === "Accepted")
+                        {
+                            // Add your own code here to handle the new element
+                            PlayAudio();
+                        }
+                    }
                 }
             });
         }
@@ -27,9 +67,11 @@ const config = { childList: true, subtree: true };
 // Start observing the target node for changes
 observer.observe(targetNode, config);
 
-// Function to play the error sound
 function PlayAudio()
 {
-    var myAudio = new Audio(chrome.runtime.getURL("soundeffect.mp3"));
+    var soundEffect = sfxRandomizer();
+    //var myAudio = new Audio(chrome.runtime.getURL(`sfx/${soundEffect}`));
+    
+    var myAudio = new Audio(chrome.runtime.getURL("sfx/soundeffect.mp3"));
     myAudio.play();
 };
