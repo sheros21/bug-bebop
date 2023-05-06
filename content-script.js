@@ -1,4 +1,4 @@
-const soundList = [
+const sfxListBad = [
     'sfx-bad/sfx-auugh.mp3',
     'sfx-bad/sfx-babooey.mp3',
     'sfx-bad/sfx-bruh.mp3',
@@ -16,33 +16,23 @@ const soundList = [
     'sfx-bad/sfx-windows-error.mp3'
 ];  
 
-function sfxRandomizer(){
-    const randomIndex = Math.floor(Math.random() * soundList.length);
-    return soundList[randomIndex];
+const sfxListGood = [
+    'sfx-good/sfx-anime-wow.mp3',
+    'sfx-good/sfx-heavenly-choir.mp3',
+    'sfx-good/sfx-legitness.mp3',
+    'sfx-good/sfx-noice.mp3',
+    'sfx-good/sfx-rizz.mp3',
+    'sfx-good/sfx-sheesh-choir.mp3',
+    'sfx-good/sfx-wow.mp3'
+];  
+
+function sfxRandomizer(sfxList){
+    const randomIndex = Math.floor(Math.random() * sfxList.length);
+    return sfxList[randomIndex];
 }
-
-
-
-// // Listen for changes to the page
-// window.addEventListener("click", () => {
-//     // Get the element by its data-e2e-locator attribute
-//     let consoleSpanResultElement = document.querySelector('span[data-e2e-locator="console-result"]');
-//     let consoleDivResultElement = document.querySelector('div[data-e2e-locator="console-result"]');
-
-//     // Check if the element exists and is visible on the page
-//     if (consoleSpanResultElement || consoleDivResultElement) {
-//     // The element is loaded and visible on the page
-//     console.log('The console result element is loaded');
-//     } else {
-//     // The element is not loaded or not visible on the page
-//     console.log('The console result element is not loaded');
-//     }
-//   });
 
 // Select the target node that you want to observe for changes
 const targetNode = document.documentElement;
-
-
 
 // Create a new instance of the MutationObserver object
 const observer = new MutationObserver(function(mutationsList, observer) {
@@ -64,24 +54,17 @@ const observer = new MutationObserver(function(mutationsList, observer) {
                             console.log(textWA);
                             if (textWA === "Accepted")
                             {
+                                console.log("accepted")
                                 PlayGoodAudio();
                             } else {
                                 PlayBadAudio();
                             }
                         }
-                        // let text = document.querySelector('div[class="text-xl font-medium text-green-s dark:text-dark-green-s"').innerHTML;
-                        // if (text === "Accepted") {
-                        //     PlayAudio();
-                        // }
                     }
                 } else {
                     if (node.nodeType === Node.ELEMENT_NODE && node.hasAttribute('class') && node.getAttribute('class') === 'flex h-full w-full flex-col overflow-hidden rounded') {
                         // If a new element with the data-e2e-locator="console-result" attribute was added, do something
                         console.log('New console result element added:', node);
-                        // let submission = document.querySelector('div[class="text-green-s dark:text-dark-green-s flex items-center gap-2 text-[16px] font-medium leading-6"]')
-                        // console.log(submission);
-                        // let text = document.querySelector('span[data-e2e-locator="submission-result"]');
-                        // console.log(text);
                         let result = document.querySelector('div[class="flex w-full pb-4"]');
                         if (result) {
                             PlayGoodAudio();
@@ -91,7 +74,7 @@ const observer = new MutationObserver(function(mutationsList, observer) {
             });
         }
     }
-});
+})
 
 // Define the configuration for the MutationObserver
 const config = { childList: true, subtree: true };
@@ -101,14 +84,12 @@ observer.observe(targetNode, config);
 
 function PlayGoodAudio()
 {
-    var myAudio = new Audio(chrome.runtime.getURL(sfxRandomizer()));
+    var myAudio = new Audio(chrome.runtime.getURL(sfxRandomizer(sfxListGood)));
     myAudio.play();
 };
 
 function PlayBadAudio()
 {
-    var myAudio = new Audio(chrome.runtime.getURL(sfxRandomizer()));
+    var myAudio = new Audio(chrome.runtime.getURL(sfxRandomizer(sfxListBad)));
     myAudio.play();
 };
-
-// bg-layer-1 dark:bg-dark-layer-1 flex h-full w-full flex-col overflow-auto
