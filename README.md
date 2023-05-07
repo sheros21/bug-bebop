@@ -1,3 +1,6 @@
+<img src="bug-bebop-logo-round.png" alt="Bug Bebop Logo" width="200">
+
+
 # Bug Bebop
 Exceptional soundboarding: Make Leetcode engaging
 
@@ -25,3 +28,7 @@ To install the Bug Bebop Chrome extension, follow these steps:
 
     Once installed, the Bug Bebop extension will automatically activate on LeetCode.
     You can toggle the sound effects on or off using the provided toggle button in the extension's popup UI.
+
+## Disclaimer
+
+    Bug Bebop is an independent project and is not affiliated with or endorsed by LeetCode or any other coding platform. It is intended for entertainment purposes only.
