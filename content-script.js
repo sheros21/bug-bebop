@@ -34,13 +34,13 @@ function sfxRandomizer(sfxList){
 // Select the target node that you want to observe for changes
 const targetNode = document.documentElement;
 var isSoundOn = true;
-
+var isConfettiOn = true;
 
 // Create a new instance of the MutationObserver object
 const observer = new MutationObserver(function(mutationsList, observer) {
     // Iterate through each mutation that was observed
     for (let mutation of mutationsList) {
-        if (isSoundOn && mutation.type === 'childList') {
+        if (mutation.type === 'childList') {
             // Iterate through each added node to check for the data-e2e-locator attribute
             mutation.addedNodes.forEach(node => {
                 if (node.nodeType === Node.ELEMENT_NODE && node.hasAttribute('class') && node.getAttribute('class') === 'mx-5 my-4 space-y-4') {
@@ -48,7 +48,7 @@ const observer = new MutationObserver(function(mutationsList, observer) {
                     console.log('New console result element added:', node);
                     let textCE = document.querySelector('span[data-e2e-locator="console-result"]');
                     let textWA = document.querySelector('div[data-e2e-locator="console-result"]');
-                    if (textCE) {
+                    if (isSoundOn && textCE) {
                         PlayBadAudio();
                     } else {
                         if (textWA) {
@@ -57,21 +57,33 @@ const observer = new MutationObserver(function(mutationsList, observer) {
                             if (textWA === "Accepted")
                             {
                                 console.log("accepted")
-                                PlayGoodAudio();
-                                PlayConfetti();
+                                if (isSoundOn) {
+                                    PlayGoodAudio();
+                                }
+                                if (isConfettiOn) {
+                                    PlayConfetti();
+                                }
                             } else {
-                                PlayBadAudio();
+                                if (isSoundOn) {
+                                    PlayBadAudio();
+                                }
                             }
                         }
                     }
                 } else {
                     if (node.nodeType === Node.ELEMENT_NODE && node.hasAttribute('class') && node.getAttribute('class') === 'flex h-full w-full flex-col overflow-hidden rounded') {
+                        // flex h-full w-full flex-col overflow-hidden rounded
                         // If a new element with the data-e2e-locator="console-result" attribute was added, do something
                         console.log('New console result element added:', node);
-                        let result = document.querySelector('div[class="flex w-full pb-4"]');
+                        // let result = document.querySelector('div[class="flex w-full pb-4"]');
+                        let result = document.querySelector('div[class="flex flex-col gap-6 px-5 pt-6"]');
                         if (result) {
-                            PlayGoodAudio();
-                            PlayConfetti();
+                            if (isSoundOn) {
+                                PlayGoodAudio();
+                            }
+                            if (isConfettiOn) {
+                                PlayConfetti();
+                            }
                         }
                     }
                 }
@@ -89,13 +101,26 @@ observer.observe(targetNode, config);
 
 // Listen for messages from the popup
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-if (message.enableSound) {
-    // Enable sound effects
-    isSoundOn = true;
-} else {
-    // Disable sound effects
-    isSoundOn = false;
-}
+    if (message.type === 'sound') {
+        if (message.enableSound) {
+            // Enable sound effects
+            isSoundOn = true;
+            console.log("sound on")
+        } else {
+            // Disable sound effects
+            isSoundOn = false;
+            console.log("sound off")
+        }
+    }
+    if (message.type === 'confetti') {
+        if (message.enableConfetti) {
+            isConfettiOn = true;
+            console.log("confetti on")
+        } else {
+            isConfettiOn = false;
+            console.log("confetti off")
+        }
+    }
 });
 
 function PlayGoodAudio()
