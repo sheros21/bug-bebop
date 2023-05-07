@@ -1,36 +1,67 @@
-// Retrieve the sound toggle checkbox element
-const soundToggle = document.getElementById('soundToggle');
-const slider = document.getElementById('mySlider');
-const sliderValue = document.getElementById('sliderValue');
+// document.addEventListener('DOMContentLoaded', function() {
+//   // Retrieve the sound toggle checkbox element
+//   const soundToggle = document.getElementById('soundToggle');
 
-// Add an event listener to the checkbox
-soundToggle.addEventListener('change', function () {
-  // Send a message to the background script with the sound toggle value
-  chrome.runtime.sendMessage({ soundToggle: soundToggle.checked });
-});
+//   // Add an event listener to the checkbox
+//   soundToggle.addEventListener('change', function() {
+//     // Send a message to the content script to toggle sound effects
+//     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+//       chrome.tabs.sendMessage(tabs[0].id, { enableSound: soundToggle.checked });
+//     });
+//   });
 
-// Send a message to the background script to get the initial slider value
-chrome.runtime.sendMessage({ getSliderValue: true }, function (response) {
-  // Set the initial slider value
-  slider.value = response.sliderValue;
-  // Display the initial slider value
-  sliderValue.textContent = response.sliderValue;
-});
+//   // Retrieve the current sound effect state from storage and update the checkbox
+//   chrome.storage.sync.get('enableSound', function(data) {
+//     soundToggle.checked = data.enableSound;
+//   });
+// });
 
-// Add an event listener to the slider
-slider.addEventListener('input', function () {
-  // Update the slider value display
-  sliderValue.textContent = slider.value;
-  // Send a message to the background script with the updated slider value
-  chrome.runtime.sendMessage({ sliderValue: slider.value });
-});
 
-// Listen for messages from the background script
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  // Check if the message is about updating the slider value
-  if (request.sliderValue) {
-    // Update the slider value and its display
-    slider.value = request.sliderValue;
-    sliderValue.textContent = request.sliderValue;
-  }
+// document.addEventListener('DOMContentLoaded', function() {
+//   // Retrieve the sound toggle checkbox element
+//   const soundToggle = document.getElementById('soundToggle');
+
+//   // Add an event listener to the checkbox
+//   soundToggle.addEventListener('change', function() {
+//     // Save the sound effect state to storage
+//     chrome.storage.sync.set({ enableSound: soundToggle.checked });
+    
+//     // Send a message to the content script to toggle sound effects
+//     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+//       chrome.tabs.sendMessage(tabs[0].id, { enableSound: soundToggle.checked });
+//     });
+//   });
+
+//   // Retrieve the current sound effect state from storage and update the checkbox
+//   chrome.storage.sync.get('enableSound', function(data) {
+//     soundToggle.checked = data.enableSound;
+//   });
+// });
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Retrieve the sound toggle checkbox element
+  const soundToggle = document.getElementById('soundToggle');
+
+  // Add an event listener to the checkbox
+  soundToggle.addEventListener('change', function() {
+    // Save the sound effect state to storage
+    chrome.storage.sync.set({ enableSound: soundToggle.checked });
+    
+    // Send a message to the content script to toggle sound effects
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, { enableSound: soundToggle.checked });
+    });
+  });
+
+  // Retrieve the current sound effect state from storage and update the checkbox
+  chrome.storage.sync.get('enableSound', function(data) {
+    soundToggle.checked = data.enableSound;
+    
+    // Send a message to the content script to toggle sound effects
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, { enableSound: soundToggle.checked });
+    });
+  });
 });
