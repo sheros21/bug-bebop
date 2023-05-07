@@ -71,6 +71,7 @@ const observer = new MutationObserver(function(mutationsList, observer) {
                         let result = document.querySelector('div[class="flex w-full pb-4"]');
                         if (result) {
                             PlayGoodAudio();
+                            PlayConfetti();
                         }
                     }
                 }
@@ -294,7 +295,6 @@ function PlayConfetti()
             confetti.push(confetto);
             container.appendChild(confetto.outer);
             timer = setTimeout(addConfetto, spread * random());
-            console.log(timer);
             count++;
 
             // Stop the animation after 5 seconds (5000 milliseconds)
