@@ -1,8 +1,6 @@
-{
-  
-  
+{ 
   "manifest_version": 2,
-  "name": "Bug Bepop",
+  "name": "Bug Bebop",
   "description": "Exceptional Soundboarding: A Chrome extension that detects errors during code compilation on LeetCode",
   "version": "1.0",
   "permissions": [
@@ -40,9 +38,9 @@
       "js": ["content-script.js"]
     }
   ],
-  "icons": {"128" : "pepega.png" },
+  "icons": {"128" : "bug-bebop-logo-round.png" },
   "browser_action": {
-    "deafult_icon": "pepega.png",
+    "deafult_icon": "bug-bebop-logo-round.png",
     "default_popup": "popup.html"
   }
 }
