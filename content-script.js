@@ -98,8 +98,19 @@ const config = { childList: true, subtree: true };
 // Start observing the target node for changes
 observer.observe(targetNode, config);
 
+// Retrieves the state of the toggles upon window being loaded
+window.onload = function() {
+    console.log("dom loaded");
+    // Retrieve the current sound effect state from storage and update the checkbox
+    chrome.storage.sync.get('enableSound', function(data) {
+        isSoundOn = data.enableSound;
+    });
 
-
+    // Retrieve the current confetti effect state from storage and update the checkbox
+    chrome.storage.sync.get('enableConfetti', function(data) {
+        isConfettiOn = data.enableConfetti;
+    });
+};
 
 // Listen for messages from the popup
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
