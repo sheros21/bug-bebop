@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Send a message to the content script to toggle sound effects
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, { enableSound: soundToggle.checked });
+      chrome.tabs.sendMessage(tabs[0].id, { type: 'sound', enableSound: soundToggle.checked });
     });
   });
 
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Send a message to the content script to toggle sound effects
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, { enableSound: soundToggle.checked });
+      chrome.tabs.sendMessage(tabs[0].id, { type: 'sound', enableSound: soundToggle.checked });
     });
   });
 

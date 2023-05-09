@@ -99,6 +99,8 @@ const config = { childList: true, subtree: true };
 observer.observe(targetNode, config);
 
 
+
+
 // Listen for messages from the popup
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message.type === 'sound') {
